@@ -10,3 +10,7 @@ export const passwordValidation = z
     /[^A-Za-z0-9]/,
     "Password must contain at least one special character"
   );
+
+export const passwordSchema = z.object({
+  password: passwordValidation,
+});
