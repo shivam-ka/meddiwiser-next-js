@@ -42,6 +42,9 @@ export async function POST(request: Request) {
           verifyCode: -1,
           verifyCodeExpiry: -1,
         },
+        $set: {
+          isVerified: true,
+        },
       });
       return Response.json(
         {

@@ -6,12 +6,12 @@ export interface IUser extends Document {
     password: string;
     verifyCode: string;
     verifyCodeExpiry: Date;
+    isVerified: boolean;
     role: "patient" | "doctor" | "admin";
     phone?: string;
     dateOfBirth?: Date;
     gender?: "male" | "female" | "other";
     profilePicture?: string;
-    isActive: boolean;
     lastLogin?: Date;
     createdAt: Date;
     updatedAt: Date;
@@ -45,6 +45,10 @@ const UserSchema = new Schema<IUser>(
         verifyCodeExpiry: {
             type: Date,
             required: [true, "Verification Expiry code is required"],
+        },
+        isVerified:{
+            type: Boolean,
+            default: false,
         },
         role: {
             type: String,
@@ -81,10 +85,6 @@ const UserSchema = new Schema<IUser>(
         },
         profilePicture: {
             type: String,
-        },
-        isActive: {
-            type: Boolean,
-            default: false,
         },
         lastLogin: {
             type: Date,
