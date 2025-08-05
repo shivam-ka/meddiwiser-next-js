@@ -43,7 +43,7 @@ export default function VerifyEmail({
               <Text style={verifyText}>Your Verification Code</Text>
               <Text style={codeText}>{verificationCode}</Text>
               <Text style={validityText}>
-                (This code is valid for 10 minutes)
+                (This code is valid for 60 minutes)
               </Text>
             </Section>
 
