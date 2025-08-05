@@ -8,21 +8,17 @@ interface sendVerificationEmailProps {
   verificationCode: string;
 }
 
-export default async function sendVerificationEmail(
-  req: NextApiRequest,
-  res: NextApiResponse,
-  { email, fullname, verificationCode }: sendVerificationEmailProps
-) {
-  const { data, error } = await resend.emails.send({
+export default async function sendVerificationEmail({
+  email,
+  fullname,
+  verificationCode,
+}: sendVerificationEmailProps) {
+  const response = await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
     subject: "meddiwiser | Verify Code",
     react: VerifyEmail({ fullname, verificationCode }),
   });
 
-  if (error) {
-    return res.status(400).json(error);
-  }
-
-  res.status(200).json(data);
+  return response;
 }

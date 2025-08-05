@@ -36,7 +36,6 @@ const UserSchema = new Schema<IUser>(
         },
         password: {
             type: String,
-            required: [true, "Password is required"],
             minlength: [8, "Password must be at least 6 characters long"],
         },
         verifyCode: {
@@ -99,7 +98,7 @@ const UserSchema = new Schema<IUser>(
     }
 );
 
-const UserModel = mongoose.models.User as mongoose.Model<IUser>;
+const UserModel = mongoose.models.User as mongoose.Model<IUser> ||
 mongoose.model<IUser>("User", UserSchema);
 
 export default UserModel;
