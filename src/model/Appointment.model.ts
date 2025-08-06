@@ -17,7 +17,7 @@ export interface IAppointment extends Document {
   paymentAmount: number;
   paymentMethod?: "CASH" | "ONLINE";
   paymentId?: string;
-  isCompleted: boolean,
+  isCompleted: boolean;
   cancellationReason?: string;
   cancelledBy?: "patient" | "doctor" | "admin";
   createdAt: Date;
@@ -85,13 +85,13 @@ const AppointmentSchema = new Schema<IAppointment>(
     paymentMethod: {
       type: String,
       enum: ["CASH", "ONLINE"],
-      default: "CASH"
+      default: "CASH",
     },
     paymentId: String,
     cancellationReason: String,
     isCompleted: {
       type: Boolean,
-      default: false
+      default: false,
     },
     cancelledBy: {
       type: String,
