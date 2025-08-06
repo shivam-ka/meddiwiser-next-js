@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import AppointmentModel from "@/model/Appointment.model";
+import AppointmentModel from "@/model/Appointment";
 import DoctorProfileModel from "@/model/DoctorProfile";
 
 export async function POST(request: Response) {
