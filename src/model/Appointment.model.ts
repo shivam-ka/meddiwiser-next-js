@@ -15,8 +15,9 @@ export interface IAppointment extends Document {
   problem?: string;
   isPaid: boolean;
   paymentAmount: number;
-  paymentMethod?: string;
+  paymentMethod?: "CASH" | "ONLINE";
   paymentId?: string;
+  isCompleted: boolean,
   cancellationReason?: string;
   cancelledBy?: "patient" | "doctor" | "admin";
   createdAt: Date;
@@ -81,9 +82,17 @@ const AppointmentSchema = new Schema<IAppointment>(
       required: [true, "Payment amount is required"],
       min: [0, "Payment amount cannot be negative"],
     },
-    paymentMethod: String,
+    paymentMethod: {
+      type: String,
+      enum: ["CASH", "ONLINE"],
+      default: "CASH"
+    },
     paymentId: String,
     cancellationReason: String,
+    isCompleted: {
+      type: Boolean,
+      default: false
+    },
     cancelledBy: {
       type: String,
       enum: ["patient", "doctor", "admin"],
