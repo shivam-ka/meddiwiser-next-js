@@ -58,10 +58,11 @@ export async function POST(request: Request) {
     });
 
     if (emailResponse.error) {
+      console.log(emailResponse)
       return Response.json(
         {
           success: false,
-          message: emailResponse.error?.message,
+          message: emailResponse.error?.message || "email response error",
         },
         {
           status: 500,
