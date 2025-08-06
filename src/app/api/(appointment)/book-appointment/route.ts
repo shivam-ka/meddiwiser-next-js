@@ -6,10 +6,10 @@ export async function POST(request: Response) {
   await dbConnect();
 
   try {
-    const { userId, doctorId, date, startTime, endTime, problem } =
+    const { userId, docProfileId, date, startTime, endTime, problem } =
       await request.json();
 
-    const doctorProfile = await DoctorProfileModel.findById(doctorId);
+    const doctorProfile = await DoctorProfileModel.findById(docProfileId);
 
     const appointmentData = new Date(date);
 
