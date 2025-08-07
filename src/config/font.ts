@@ -1,4 +1,4 @@
-import { Outfit, Inter } from "next/font/google";
+import { Outfit, Inter, Geist } from "next/font/google";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -7,9 +7,9 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
 });
 
-export const fontVariables = `${outfit.variable} ${inter.variable}`;
+export const fontVariables = `${outfit.variable} ${geist.variable}`;
