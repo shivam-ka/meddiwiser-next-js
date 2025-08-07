@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@imagekit/next": "^2.1.2",
     "@react-email/components": "0.4.0",
     "@t3-oss/env-nextjs": "^0.13.8",
     "bcryptjs": "^3.0.2",
