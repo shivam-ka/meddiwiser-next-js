@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("No account found with this email or phone number");
           }
 
-          if (user.password) {
+          if (!user.password) {
             throw new Error(
               "Password not set. Please set up your password first."
             );

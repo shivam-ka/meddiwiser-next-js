@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { env } from "@/env";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
@@ -48,7 +49,8 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
             {children}
-            <Footer/>
+            <Footer />
+            <Toaster position="top-center" />
           </ThemeProvider>
         </body>
       </AuthProvider>

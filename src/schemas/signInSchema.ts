@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { passwordValidation } from "./passwordSchema";
 
 export const signInSchema = z.object({
-  identifier: z.string(),
-  password: passwordValidation,
+  identifier: z.string().min(3, "Enter Vlid Email or Phone"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
 });

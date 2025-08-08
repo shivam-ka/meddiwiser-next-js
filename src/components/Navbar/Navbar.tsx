@@ -7,7 +7,6 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
 import { ChevronRight, CircleUser, Menu } from "lucide-react";
@@ -20,6 +19,7 @@ import {
   SheetTitle,
 } from "../ui/sheet";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
