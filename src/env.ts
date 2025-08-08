@@ -12,6 +12,7 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY: z.string(),
     NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT: z.string().url(),
+    NEXT_PUBLIC_BASE_URL: z.string().url(),
   },
 
   runtimeEnv: {
@@ -23,5 +24,6 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
     NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT:
       process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT,
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
 });

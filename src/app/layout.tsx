@@ -3,6 +3,11 @@ import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { fontVariables } from "@/config/font";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { env } from "@/env";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer";
+
+const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
 export const metadata: Metadata = {
   title: {
@@ -17,7 +22,7 @@ export const metadata: Metadata = {
       "Find and book doctor appointments online with MeddiWiser. Quick, easy, and reliable access to healthcare professionals.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: `${baseUrl}/og-image.jpg`,
         width: 1100,
         height: 630,
         alt: "MeddiWiser - Book Doctor Appointments Online",
@@ -27,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/og-image.jpg"],
+    images: [`${baseUrl}/og-image.jpg`],
   },
 };
 
@@ -37,11 +42,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <AuthProvider>
         <body className={`${fontVariables} antialiased`}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
             {children}
+            <Footer/>
           </ThemeProvider>
         </body>
       </AuthProvider>
