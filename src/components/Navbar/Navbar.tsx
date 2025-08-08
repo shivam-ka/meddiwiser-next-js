@@ -18,7 +18,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "../ui/sheet";
 import { useState } from "react";
 
@@ -34,7 +33,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="border-primary sticky top-0 z-50 flex items-center justify-between border-b bg-white/80 px-2 py-4 shadow-sm backdrop-blur-md 2xl:px-20 dark:bg-black/80">
+      <header className="sticky top-0 z-50 flex items-center justify-between border-b border-b-neutral-600 bg-white/80 px-2 py-4 shadow-sm backdrop-blur-md 2xl:px-20 dark:bg-black/80">
         <Link href="/" className="flex items-center gap-2">
           <Image
             className="h-8 w-8 rotate-12 sm:h-10 sm:w-10"
@@ -48,11 +47,11 @@ export default function Navbar() {
         </Link>
 
         <NavigationMenu className="hidden lg:block">
-          <NavigationMenuList>
+          <NavigationMenuList className="space-x-3">
             {navItems.map((item) => (
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} text-[15px] font-normal tracking-wide hover:bg-neutral-200 dark:hover:bg-neutral-800/90`}
+                  className={`text-[15px] font-normal tracking-wide hover:bg-neutral-200 dark:hover:bg-neutral-800/90`}
                   asChild
                 >
                   <Link href={item.href}>{item.name}</Link>
