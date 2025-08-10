@@ -13,4 +13,8 @@ export const passwordValidation = z
 
 export const passwordSchema = z.object({
   password: passwordValidation,
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Confirm Passwords do not match",
+  path: ["confirmPassword"], // This shows the error on confirmPassword field
 });

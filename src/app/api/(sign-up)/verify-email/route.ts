@@ -6,6 +6,7 @@ export async function POST(request: Request) {
 
   try {
     const { email, verifyCode } = await request.json();
+    console.log(email, verifyCode)
 
     if (!email || !verifyCode) {
       return Response.json(

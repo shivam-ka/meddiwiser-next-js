@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 //icons
-import { Mail, Lock, Loader2, Eye, EyeOff, Loader } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Loader } from "lucide-react";
 import Link from "next/link";
 
 // Shac sn

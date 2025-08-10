@@ -19,10 +19,20 @@ import {
   SheetTitle,
 } from "../ui/sheet";
 import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { User } from "next-auth";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Doctors", href: "/doctors" },
@@ -30,6 +40,9 @@ export default function Navbar() {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
+
+  const { data: session } = useSession();
+  const user: User = session?.user as User;
 
   return (
     <>
@@ -62,11 +75,35 @@ export default function Navbar() {
         </NavigationMenu>
 
         <div className="flex items-center">
-          {/* Login Button - Hidden on mobile */}
-          <Button variant="ghost" className="text-foreground gap-1">
-            <CircleUser />
-            Login
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="text-foreground gap-1 focus-visible:ring-0"
+              >
+                <CircleUser />
+                {user ? <p>Profile</p> : <p>Log in</p>}
+              </Button>
+            </DropdownMenuTrigger>
+            {user ? (
+              <>
+                {user.role === "patient" && <PatientMenu user={user} />}
+                {user.role === "doctor" && <DoctorMenu user={user} />}
+                {user.role === "admin" && <AdminMenu user={user} />}
+              </>
+            ) : (
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/sign-up">Create Account</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/sign-in">Login</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            )}
+          </DropdownMenu>
 
           <ThemeToggleButton start="top-right" />
 
@@ -117,5 +154,92 @@ export default function Navbar() {
         </SheetContent>
       </Sheet>
     </>
+  );
+}
+
+interface UserProps {
+  user: User;
+}
+
+function PatientMenu({ user }: UserProps) {
+  return (
+    <DropdownMenuContent>
+      <DropdownMenuLabel className="flex flex-col">
+        <span className="capitalize">{user.fullName}</span>
+        <span className="text-muted-foreground text-xs">{user.email}</span>
+      </DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem asChild>
+        <Link href="/dashboard">Profile </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/doctors">Book Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/appointments">My Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        className="font-semibold text-red-800"
+        onClick={() => signOut()}
+      >
+        Log out
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  );
+}
+
+function DoctorMenu({ user }: UserProps) {
+  return (
+    <DropdownMenuContent>
+      <DropdownMenuLabel className="flex flex-col">
+        <span className="capitalize">{user.fullName}</span>
+        <span className="text-muted-foreground text-xs">{user.email}</span>
+      </DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem asChild>
+        <Link href="/dashboard">Profile </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/doctors">Book Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/appointments">My Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        className="font-semibold text-red-800"
+        onClick={() => signOut()}
+      >
+        Log out
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  );
+}
+function AdminMenu({ user }: UserProps) {
+  return (
+    <DropdownMenuContent>
+      <DropdownMenuLabel className="flex flex-col">
+        <span className="capitalize">{user.fullName}</span>
+        <span className="text-muted-foreground text-xs">{user.email}</span>
+      </DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem asChild>
+        <Link href="/dashboard">Profile </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/doctors">Book Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link href="/appointments">My Appointments </Link>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        className="font-semibold text-red-800"
+        onClick={() => signOut()}
+      >
+        Log out
+      </DropdownMenuItem>
+    </DropdownMenuContent>
   );
 }
