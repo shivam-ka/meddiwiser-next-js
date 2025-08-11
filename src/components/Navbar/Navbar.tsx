@@ -29,6 +29,15 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { User } from "next-auth";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,8 +50,53 @@ export default function Navbar() {
     { name: "Contact", href: "/contact" },
   ];
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const user: User = session?.user as User;
+
+  const patientMenu = [
+    {
+      name: "Profile",
+      href: "/dashboard",
+    },
+    {
+      name: "Book Appointment",
+      href: "/dashboard",
+    },
+    {
+      name: "Appointment",
+      href: "/dashboard",
+    },
+  ];
+
+  const doctorMenu = [
+    {
+      name: "Profile",
+      href: "/dashboard",
+    },
+    {
+      name: "Book Appointment",
+      href: "/dashboard",
+    },
+    {
+      name: "Appointment",
+      href: "/dashboard",
+    },
+  ];
+
+  const adminMenu = [
+    {
+      name: "Profile",
+      href: "/dashboard",
+    },
+    {
+      name: "Book Appointment",
+      href: "/dashboard",
+    },
+    {
+      name: "Appointment",
+      href: "/dashboard",
+    },
+  ];
 
   return (
     <>
@@ -59,7 +113,7 @@ export default function Navbar() {
           <h1 className="hidden sm:block sm:text-xl lg:text-2xl">Meddiwiser</h1>
         </Link>
 
-        <NavigationMenu className="hidden lg:block">
+        <NavigationMenu className="absolute right-1/2 left-1/2 hidden translate-x-1/2 lg:block">
           <NavigationMenuList className="space-x-3">
             {navItems.map((item) => (
               <NavigationMenuItem key={item.name}>
@@ -75,35 +129,45 @@ export default function Navbar() {
         </NavigationMenu>
 
         <div className="flex items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="text-foreground gap-1 focus-visible:ring-0"
-              >
-                <CircleUser />
-                {user ? <p>Profile</p> : <p>Log in</p>}
-              </Button>
-            </DropdownMenuTrigger>
-            {user ? (
-              <>
-                {user.role === "patient" && <PatientMenu user={user} />}
-                {user.role === "doctor" && <DoctorMenu user={user} />}
-                {user.role === "admin" && <AdminMenu user={user} />}
-              </>
-            ) : (
-              <DropdownMenuContent>
-                <DropdownMenuLabel>Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/sign-up">Create Account</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/sign-in">Login</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            )}
-          </DropdownMenu>
+          {status === "loading" ? (
+            <div className="h-7 w-20 animate-pulse rounded-sm bg-neutral-300 dark:bg-neutral-800"></div>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="text-foreground gap-1 focus-visible:ring-0"
+                >
+                  <CircleUser />
+                  {user ? <p>Profile</p> : <p>Log in</p>}
+                </Button>
+              </DropdownMenuTrigger>
+              {user ? (
+                <>
+                  {user.role === "patient" && (
+                    <UserdropdownMenu user={user} dropDownMenu={patientMenu} />
+                  )}
+                  {user.role === "doctor" && (
+                    <UserdropdownMenu user={user} dropDownMenu={doctorMenu} />
+                  )}
+                  {user.role === "admin" && (
+                    <UserdropdownMenu user={user} dropDownMenu={adminMenu} />
+                  )}
+                </>
+              ) : (
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/sign-up">Create Account</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/sign-in">Login</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              )}
+            </DropdownMenu>
+          )}
 
           <ThemeToggleButton start="top-right" />
 
@@ -157,89 +221,68 @@ export default function Navbar() {
   );
 }
 
-interface UserProps {
+interface MenuItem {
+  name: string;
+  href: string;
+  icon?: React.ReactNode;
+}
+
+interface UserdropdownMenuProps {
   user: User;
+  dropDownMenu: MenuItem[];
 }
 
-function PatientMenu({ user }: UserProps) {
-  return (
-    <DropdownMenuContent>
-      <DropdownMenuLabel className="flex flex-col">
-        <span className="capitalize">{user.fullName}</span>
-        <span className="text-muted-foreground text-xs">{user.email}</span>
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem asChild>
-        <Link href="/dashboard">Profile </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/doctors">Book Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/appointments">My Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem
-        className="font-semibold text-red-800"
-        onClick={() => signOut()}
-      >
-        Log out
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  );
-}
+function UserdropdownMenu({ user, dropDownMenu }: UserdropdownMenuProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-function DoctorMenu({ user }: UserProps) {
   return (
-    <DropdownMenuContent>
-      <DropdownMenuLabel className="flex flex-col">
-        <span className="capitalize">{user.fullName}</span>
-        <span className="text-muted-foreground text-xs">{user.email}</span>
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem asChild>
-        <Link href="/dashboard">Profile </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/doctors">Book Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/appointments">My Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem
-        className="font-semibold text-red-800"
-        onClick={() => signOut()}
-      >
-        Log out
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  );
-}
-function AdminMenu({ user }: UserProps) {
-  return (
-    <DropdownMenuContent>
-      <DropdownMenuLabel className="flex flex-col">
-        <span className="capitalize">{user.fullName}</span>
-        <span className="text-muted-foreground text-xs">{user.email}</span>
-      </DropdownMenuLabel>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem asChild>
-        <Link href="/dashboard">Profile </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/doctors">Book Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuItem asChild>
-        <Link href="/appointments">My Appointments </Link>
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem
-        className="font-semibold text-red-800"
-        onClick={() => signOut()}
-      >
-        Log out
-      </DropdownMenuItem>
-    </DropdownMenuContent>
+    <>
+      <DropdownMenuContent>
+        <DropdownMenuLabel className="flex flex-col">
+          <span className="capitalize">{user.fullName}</span>
+          <span className="text-muted-foreground text-xs">{user.email}</span>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+        {dropDownMenu.map((item, index) => (
+          <DropdownMenuItem key={index} asChild>
+            <Link href={item.href}>{item.name} </Link>
+          </DropdownMenuItem>
+        ))}
+
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => setIsDialogOpen(true)}
+          className="font-semibold text-red-800"
+        >
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure you want to logout?</DialogTitle>
+            <DialogDescription>
+              {`You'll need to sign in again to access your account.`}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              className="dark:bg-red-800"
+              variant="destructive"
+              onClick={() => {
+                signOut();
+              }}
+            >
+              Logout
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
