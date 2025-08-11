@@ -12,11 +12,11 @@ export async function GET() {
       authenticationParameters,
       publicKey: env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY,
     });
-  } catch (error) {
+  } catch (error: any) {
     Response.json(
       {
         success: false,
-        mussage: "Image Kit Authentication error",
+        mussage: error.message || "Image Kit Authentication error",
       },
       {
         status: 500,

@@ -7,14 +7,7 @@ import * as z from "zod";
 import axios from "axios";
 
 //icons
-import {
-  Mail,
-  Loader,
-  Check,
-  Calendar as CalendarIcon,
-  ChevronDownIcon,
-  User,
-} from "lucide-react";
+import { Mail, Loader, Check, ChevronDownIcon, User } from "lucide-react";
 
 // Shac sn
 import { toast } from "sonner";
@@ -311,12 +304,13 @@ function StepProgress({ steps, currentStep }: StepProgressProps) {
             >
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  className={`flex size-8 items-center justify-center rounded-full border text-sm font-medium transition-colors ${index < currentStep
-                    ? "border-green-500 bg-green-500 text-green-50 dark:border-green-700 dark:bg-green-800 dark:text-green-50"
-                    : index === currentStep
-                      ? "border-primary bg-primary text-white"
-                      : "border-muted bg-muted text-muted-foreground"
-                    }`}
+                  className={`flex size-8 items-center justify-center rounded-full border text-sm font-medium transition-colors ${
+                    index < currentStep
+                      ? "border-green-500 bg-green-500 text-green-50 dark:border-green-700 dark:bg-green-800 dark:text-green-50"
+                      : index === currentStep
+                        ? "border-primary bg-primary text-white"
+                        : "border-muted bg-muted text-muted-foreground"
+                  }`}
                 >
                   {index < currentStep ? (
                     <Check className="h-4 w-4" />

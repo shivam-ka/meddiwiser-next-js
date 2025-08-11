@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import React from "react"
@@ -34,7 +35,6 @@ export default function ThemeToggleButton({
 
     let styleElement = document.getElementById(styleId) as HTMLStyleElement
 
-
     if (!styleElement) {
       styleElement = document.createElement("style")
       styleElement.id = styleId
@@ -42,8 +42,7 @@ export default function ThemeToggleButton({
     }
 
     styleElement.textContent = css
-
-  }, [])
+  }, [styleId]) // Added styleId as dependency
 
   const toggleTheme = React.useCallback(() => {
     const animation = createAnimation(variant, start, url)
@@ -62,7 +61,7 @@ export default function ThemeToggleButton({
     }
 
     document.startViewTransition(switchTheme)
-  }, [theme, setTheme])
+  }, [theme, setTheme, variant, start, url, updateStyles]) // Added all dependencies
 
   return (
     <Button

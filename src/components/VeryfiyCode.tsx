@@ -19,7 +19,7 @@ import * as z from "zod";
 import { Button } from "./ui/button";
 import { Loader } from "lucide-react";
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { toast } from "sonner";
 
 interface VerifyCodeProps {

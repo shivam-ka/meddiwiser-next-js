@@ -1,5 +1,4 @@
 import { resend } from "@/lib/resend";
-import type { NextApiRequest, NextApiResponse } from "next";
 import VerifyEmail from "../../email/VerifyEmail";
 
 interface sendVerificationEmailProps {

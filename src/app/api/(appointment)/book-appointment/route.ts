@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import AppointmentModel from "@/model/Appointment";
 import DoctorProfileModel from "@/model/DoctorProfile";
 
-export async function POST(request: Response) {
+export async function POST(request: Request) {
   await dbConnect();
 
   try {
@@ -46,8 +46,6 @@ export async function POST(request: Response) {
       {
         success: false,
         error: error.message || "Failed to book appointment",
-        details:
-          process.env.NODE_ENV === "development" ? error.stack : undefined,
       },
       { status: 500 }
     );
