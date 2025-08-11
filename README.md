@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeddiWiser - Appointment Booking System
 
-## Getting Started
+<!-- ![MeddiWiser Logo](https://via.placeholder.com/150x50?text=MeddiWiser)  -->
 
-First, run the development server:
+A modern healthcare appointment booking platform connecting patients with doctors seamlessly.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features ✨
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Patient Features**:
+  - Browse doctors by specialty and availability
+  - Book/Cancel/Reschedule appointments
+  - Secure patient dashboard
+  - Appointment reminders (email/SMS)
+  - Medical history tracking
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Doctor Features**:
+  - Profile management with calendar sync
+  - Appointment scheduling system
+  - Patient management portal
+  - Telemedicine integration
+  - Earnings dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Admin Features**:
+  - User management
+  - Analytics dashboard
+  - Content management
+  - System configuration
 
-## Learn More
+## Technologies Used 🛠️
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+- Next.js 15 (App Router)
+- React 18
+- TypeScript
+- Tailwind CSS
+- Shadcn/ui Components
+- React Hook Form
+- Zod (Validation)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend
+- Node.js
+- Express
+- MongoDB (with Mongoose)
+- Next.js API Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Additional Services
+- Resend (Email Notifications)
+- Next Auth (Authentication)
 
-## Deploy on Vercel
+## Getting Started 🚀
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/shivam-ka/meddiwiser-next-js.git
+   cd meddiwiser
