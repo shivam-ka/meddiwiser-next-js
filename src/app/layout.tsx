@@ -7,6 +7,7 @@ import { env } from "@/env";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import Progressbar from "@/components/Progressbar";
 
 const baseUrl = env.NEXT_PUBLIC_BASE_URL;
 
@@ -50,6 +51,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <Progressbar />
             <Toaster position="top-center" />
           </ThemeProvider>
         </body>
