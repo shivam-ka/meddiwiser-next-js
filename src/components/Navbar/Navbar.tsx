@@ -74,12 +74,12 @@ export default function Navbar() {
       href: "/dashboard",
     },
     {
-      name: "Book Appointment",
-      href: "/dashboard",
+      name: "Doctor Profile",
+      href: "/doctor/profile",
     },
     {
-      name: "Appointment",
-      href: "/dashboard",
+      name: "See All Appointments",
+      href: "/doctor/appointments",
     },
   ];
 
