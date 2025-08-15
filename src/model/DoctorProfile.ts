@@ -9,8 +9,6 @@ export interface IDoctorProfile extends Document {
   consultationFee: number;
   availableSlots: {
     day: string;
-    startTime: string;
-    endTime: string;
     isAvailable: boolean;
   }[];
   bio?: string;
@@ -59,28 +57,6 @@ const DoctorProfileSchema = new Schema<IDoctorProfile>(
             "sunday",
           ],
           required: true,
-        },
-        startTime: {
-          type: String,
-          required: true,
-          match: [
-            /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
-            "Please enter a valid time in HH:MM format",
-          ],
-        },
-        endTime: {
-          type: String,
-          required: true,
-          match: [
-            /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
-            "Please enter a valid time in HH:MM format",
-          ],
-          validate: {
-            validator: function (this: any, value: string) {
-              return value > this.startTime;
-            },
-            message: "End time must be after start time",
-          },
         },
         isAvailable: {
           type: Boolean,

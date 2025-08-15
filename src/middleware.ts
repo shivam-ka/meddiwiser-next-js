@@ -23,6 +23,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/api",
     "/sign-in",
     "/sign-up",
     "/doctor/:path*",

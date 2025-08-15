@@ -18,8 +18,7 @@ export default function LoadingSkeleton() {
             <div className="space-y-4">
               {[...Array(11)].map((_, i) => (
                 <div key={i} className="flex">
-                  <Skeleton className="h-5 w-[200px]" />
-                  <Skeleton className="ml-4 h-5 flex-1" />
+                  <Skeleton className="ml-4 h-5 flex-1 rounded-sm" />
                 </div>
               ))} 
               

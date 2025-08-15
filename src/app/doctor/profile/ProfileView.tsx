@@ -102,11 +102,6 @@ export function ProfileView({ profile }: {profile: any}) {
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="p-0">
-                  <div className="text-muted-foreground text-xs">
-                    {slot.startTime} - {slot.endTime}
-                  </div>
-                </CardContent>
               </Card>
             ))}
           </div>

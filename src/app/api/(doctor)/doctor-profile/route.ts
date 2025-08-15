@@ -1,13 +1,22 @@
 import dbConnect from "@/lib/dbConnect";
 import DoctorProfileModel from "@/model/DoctorProfile";
 import UserModel from "@/model/User";
+import { authOptions } from "../../auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 export async function POST(request: Request) {
   await dbConnect();
 
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user._id) {
+      return { success: false, error: "Unauthorized" };
+    }
+
     const {
-      userId,
       specialization,
       qualifications,
       experience,
@@ -17,7 +26,7 @@ export async function POST(request: Request) {
       languages,
     } = await request.json();
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(session?.user._id);
 
     if (!(user?.role === "doctor")) {
       return Response.json(
@@ -58,6 +67,29 @@ export async function POST(request: Request) {
       {
         status: 500,
       }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    
+    const session = await getServerSession(authOptions);
+      const token = await getToken({req: req});
+  console.log("Token:", token);
+    
+    
+    await dbConnect();
+    return NextResponse.json({
+      data: session,
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      {
+        success: false,
+      },
+      { status: 500 }
     );
   }
 }
